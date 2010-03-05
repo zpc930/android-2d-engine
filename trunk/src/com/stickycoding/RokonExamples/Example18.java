@@ -5,14 +5,12 @@ import java.nio.ByteBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import com.stickycoding.Rokon.Debug;
 import com.stickycoding.Rokon.RokonActivity;
 import com.stickycoding.Rokon.Sprite;
 import com.stickycoding.Rokon.Texture;
 import com.stickycoding.Rokon.TextureAtlas;
 import com.stickycoding.Rokon.TextureManager;
 import com.stickycoding.Rokon.Backgrounds.FixedBackground;
-import com.stickycoding.Rokon.SpriteModifiers.Resonate;
 
 /**
  * @author Richard

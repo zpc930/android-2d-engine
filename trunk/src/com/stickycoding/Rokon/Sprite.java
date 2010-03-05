@@ -4,7 +4,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 import javax.microedition.khronos.opengles.GL10;
-import javax.microedition.khronos.opengles.GL11;
 
 import android.os.Build;
 
@@ -20,12 +19,10 @@ import com.stickycoding.Rokon.Handlers.CollisionHandler;
  */
 public class Sprite extends DynamicObject {
 	public static final int MAX_COLLIDERS = 0;
-	public static final int MAX_MODIFIERS = 5;
 	
-	private int i, j, k, r;
+	private int i, j;
 	
 	private Sprite[] _collidersArr = new Sprite[MAX_COLLIDERS];
-	private SpriteModifier[] _modifierArr = new SpriteModifier[MAX_MODIFIERS];
 	private int _colliderCount = 0;
 	
 	private AnimationHandler _animationHandler;
@@ -42,18 +39,6 @@ public class Sprite extends DynamicObject {
 	private boolean _animateRandom;
 	private int [] _customTile;
 	private int _currentTile;
-
-	private boolean _visible;
-	
-	private float _red;
-	private float _green;
-	private float _blue;
-	private float _alpha;
-	
-	private Texture _texture;
-	private int _tileX;
-	private int _tileY;
-	private ByteBuffer _texBuffer;
 	
 	public int intVar1, intVar2, intVar3;
 	
@@ -66,8 +51,6 @@ public class Sprite extends DynamicObject {
 		_red = 1;
 		_green = 1;
 		_blue = 1;
-		_alpha = 1;
-		_visible = true;
 		_killMe = false;
 
 		if(Build.VERSION.SDK == "3")
@@ -111,50 +94,10 @@ public class Sprite extends DynamicObject {
 	}
 	
 	/**
-	 * @param visible TRUE if the Sprite is to be drawn on the Layer, default is TRUE
-	 */
-	public void setVisible(boolean visible) {
-		_visible = visible;
-	}
-	
-	/**
-	 * @return TRUE if the Sprite is being drawn onto the Layer
-	 */
-	public boolean isVisible() {
-		return _visible;
-	}
-	
-	/**
-	 * @param texture applies a Texture to the Sprite
-	 */
-	public void setTexture(Texture texture) {
-		_texture = texture;
-		_tileX = 1;
-		_tileY = 1;
-		_updateTextureBuffer();
-	}
-	
-	/**
 	 * Removes the Texture that has been applied to the Sprite
 	 */
 	public void resetTexture() {
 		_texture = null;
-	}
-	
-	/**
-	 * @param tileIndex the index of the Texture tile to be used by the Sprite, 1-based
-	 */
-	public void setTileIndex(int tileIndex) {
-		if(_texture == null) {
-			Debug.print("Error - Tried setting tileIndex of null texture");
-			return;			
-		}
-		tileIndex -= 1;
-		_tileX = (tileIndex % _texture.getTileColumnCount()) + 1;
-		_tileY = ((tileIndex - (_tileX - 1)) / _texture.getTileColumnCount()) + 1;
-		tileIndex += 1;
-		//Debug.print("Updating tile index idx=" + tileIndex + " x=" + _tileX + " y=" + _tileY);
-		_updateTextureBuffer();
 	}
 	
 	/**
@@ -167,73 +110,6 @@ public class Sprite extends DynamicObject {
 		return tileIndex;
 	}	
 	
-	/**
-	 * Sets the Texture tile index to be used by the Sprite by columns and rows, rather than index
-	 * @param tileX column
-	 * @param tileY row
-	 */
-	public void setTile(int tileX, int tileY) {
-		_tileX = tileX;
-		_tileY = tileY;
-		_updateTextureBuffer();
-	}
-	
-	/**
-	 * @return the current Texture applied to the Sprite
-	 */
-	public Texture getTexture() {
-		return _texture;
-	}
-	
-	private float x1, y1, x2, y2, xs, ys, fx1, fx2, fy1, fy2;
-	private void _updateTextureBuffer() {		
-		if(_texture == null)
-			return;
-		
-		if(_texture.getTextureAtlas() == null)
-			return;
-		
-		x1 = _texture.getAtlasX();
-		y1 = _texture.getAtlasY();
-		x2 = _texture.getAtlasX() + _texture.getWidth();
-		y2 = _texture.getAtlasY() + _texture.getHeight();
-
-		xs = (x2 - x1) / _texture.getTileColumnCount();
-		ys = (y2 - y1) / _texture.getTileRowCount();
-
-		x1 = _texture.getAtlasX() + (xs * (_tileX - 1));
-		x2 = _texture.getAtlasX() + (xs * (_tileX - 1)) + xs; 
-		y1 = _texture.getAtlasY() + (ys * (_tileY - 1));
-		y2 = _texture.getAtlasY() + (ys * (_tileY - 1)) + ys; 
-		
-		fx1 = x1 / (float)_texture.getTextureAtlas().getWidth();
-		fx2 = x2 / (float)_texture.getTextureAtlas().getWidth();
-		fy1 = y1 / (float)_texture.getTextureAtlas().getHeight();
-		fy2 = y2 / (float)_texture.getTextureAtlas().getHeight();
-		
-		if(!_texture.isFlipped()) {
-			_texBuffer.position(0);		
-			_texBuffer.putFloat(fx1); _texBuffer.putFloat(fy1);
-			_texBuffer.putFloat(fx2); _texBuffer.putFloat(fy1);
-			_texBuffer.putFloat(fx1); _texBuffer.putFloat(fy2);
-			_texBuffer.putFloat(fx2); _texBuffer.putFloat(fy2);		
-			_texBuffer.position(0);
-		} else {
-			_texBuffer.position(0);		
-			_texBuffer.putFloat(fx1); _texBuffer.putFloat(fy2);
-			_texBuffer.putFloat(fx2); _texBuffer.putFloat(fy2);	
-			_texBuffer.putFloat(fx1); _texBuffer.putFloat(fy1);
-			_texBuffer.putFloat(fx2); _texBuffer.putFloat(fy1);	
-			_texBuffer.position(0);
-		}
-	}
-	
-	/**
-	 * Updates the texture buffers used by OpenGL, there should be no need to call this
-	 */
-	public void updateBuffers() {
-		_updateTextureBuffer();
-	}
 
 	/**
 	 * @param red 0.0 to 1.0
@@ -254,13 +130,6 @@ public class Sprite extends DynamicObject {
 	 */
 	public void setBlue(float blue) {
 		_blue = blue;
-	}
-
-	/**
-	 * @param red 0.0 to 1.0
-	 */
-	public void setAlpha(float alpha) {
-		_alpha = alpha;
 	}
 
 	/**
@@ -292,13 +161,6 @@ public class Sprite extends DynamicObject {
 	}
 	
 	/**
-	 * @return current alpha value, 0.0 to 1.0
-	 */
-	public float getAlpha() {
-		return _alpha;
-	}
-	
-	/**
 	 * Sets the color of the Sprite, this is still applied when a textured. 1,1,1,1 is white and 0,0,0,1 is black 
 	 * @param red 0.0 to 1.0
 	 * @param green 0.0 to 1.0
@@ -309,7 +171,7 @@ public class Sprite extends DynamicObject {
 		setRed(red);
 		setGreen(green);
 		setBlue(blue);
-		setAlpha(alpha);
+		_alpha = alpha;
 	}
 	
 	/**
@@ -365,57 +227,9 @@ public class Sprite extends DynamicObject {
 	 * Draws the Sprite to the OpenGL object, should be no need to call this
 	 * @param gl
 	 */
-	private boolean hasTexture;
 	public void drawFrame(GL10 gl) {
 		_detectCollisions();
-
-		if(!_visible)
-			return;
-		
-		if(notOnScreen())
-			return;
-		
-		if(_texture == null)
-			hasTexture = false;
-		else
-			hasTexture = true;
-		
-		if(!hasTexture) {
-			gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
-			gl.glDisable(GL10.GL_TEXTURE_2D);
-		} else {
-			_texture.select(gl);
-		}
-		
-		gl.glLoadIdentity();
-		gl.glVertexPointer(2, GL11.GL_FLOAT, 0, getVertexBuffer());
-		
-		for(i = 0; i < MAX_MODIFIERS; i++)
-			if(_modifierArr[i] != null)
-				_modifierArr[i].onDraw(this, gl);
-
-		if(getRotation() != 0) {
-			if (getRotationPivotRelative()) {
-				gl.glTranslatef(getX() + (getScaleX() * getRotationPivotX()), getY() + (getScaleY() * getRotationPivotY()), 0);
-				gl.glRotatef(getRotation(), 0, 0, 1);
-				gl.glTranslatef(-1 * (getX() + (getScaleX() * getRotationPivotX())), -1 * (getY() + (getScaleY() * getRotationPivotY())), 0);
-			} else {
-				gl.glTranslatef(getRotationPivotX(), getRotationPivotY(), 0);
-				gl.glRotatef(getRotation(), 0, 0, 1);
-				gl.glTranslatef(-1 * getRotationPivotX(), -1 * getRotationPivotY(), 0);
-			}
-		}
-
-		gl.glColor4f(_red, _green, _blue, _alpha);
-		if(hasTexture)
-			gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, _texBuffer);	
-
-		gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, 4);
-		
-		if(!hasTexture) {
-			gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
-			gl.glEnable(GL10.GL_TEXTURE_2D);
-		}
+		super.drawFrame(gl);
 	}
 	
 	/**
@@ -430,30 +244,6 @@ public class Sprite extends DynamicObject {
 		if(y < getY() || y > getY() + getHeight())
 			return false;
 		return true;
-	}
-	
-	/**
-	 * @param spriteModifier a SpriteModifier to add the Sprite 
-	 */
-	public void addModifier(SpriteModifier spriteModifier) {
-		j = -1;
-		for(i = 0; i < MAX_MODIFIERS; i++)
-			if(_modifierArr[i] == null)
-				j = i;
-		if(j == -1) {
-			Debug.print("TOO MANY SPRITE MODIFIERS");
-			return;
-		}
-		_modifierArr[j] = spriteModifier;
-	}
-	
-	/**
-	 * @param spriteModifier a SpriteModifier to remove from the Sprite
-	 */
-	public void removeModifier(SpriteModifier spriteModifier) {
-		for(i = 0; i < MAX_MODIFIERS; i++)
-			if(_modifierArr[i].equals(spriteModifier))
-				_modifierArr[i] = null;
 	}
 	
 	/**
@@ -516,13 +306,7 @@ public class Sprite extends DynamicObject {
 				_animateLastUpdate = Rokon.getTime();
 			}
 		}
-
-		for(r = 0; r < MAX_MODIFIERS; r++)
-			if(_modifierArr[r] != null) {
-				_modifierArr[r].onUpdate(this);
-				if(_modifierArr[r].isExpired())
-					_modifierArr[r] = null;
-			}
+		updateModifiers();
 	}
 	
 	/**
@@ -537,8 +321,8 @@ public class Sprite extends DynamicObject {
 	 */
 	public void resetCollisionHandler() {
 		_collisionHandler = null;
-		for(i = 0; i < MAX_MODIFIERS; i++)
-			_modifierArr[i] = null;
+		//TODO modifierArr reset in collision handler ?
+		resetModifiers();
 	}
 	
 	/**
@@ -692,16 +476,6 @@ public class Sprite extends DynamicObject {
 		return _animating;
 	}
 	
-	/**
-	 * Removes all SpriteModifier's from the Sprite
-	 */
-	public void resetModifiers() {
-			for(k = 0; k < MAX_MODIFIERS; k++) {
-				try {
-					_modifierArr[k] = null;
-				} catch (Exception e) { }
-			}
-	}
 	
 	/**
 	 * Resets the sprite to the initial conditions

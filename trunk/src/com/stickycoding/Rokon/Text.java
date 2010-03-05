@@ -178,7 +178,7 @@ public class Text {
 			newSprites[i].setRed(_red);
 			newSprites[i].setGreen(_green);
 			newSprites[i].setBlue(_blue);
-			newSprites[i].setAlpha(_alpha);
+			newSprites[i]._alpha = _alpha;
 			x += width + 3;
 		}
 		_sprite = newSprites;

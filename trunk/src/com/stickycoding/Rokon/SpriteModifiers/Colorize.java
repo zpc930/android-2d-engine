@@ -1,7 +1,7 @@
 package com.stickycoding.Rokon.SpriteModifiers;
 
+import com.stickycoding.Rokon.DynamicObject;
 import com.stickycoding.Rokon.Rokon;
-import com.stickycoding.Rokon.Sprite;
 import com.stickycoding.Rokon.SpriteModifier;
 
 /** 
@@ -40,7 +40,7 @@ public class Colorize extends SpriteModifier {
 	
 	private long now, timeDiff;
 	private float modifier;
-	public void onUpdate(Sprite sprite) {
+	public void onUpdate(DynamicObject sprite) {
 		now = Rokon.getTime();
 		timeDiff = now - _lastUpdate;
 		modifier = _frequency / 1000 * timeDiff;
@@ -84,9 +84,9 @@ public class Colorize extends SpriteModifier {
 			_blueUp = true;
 		}
 		
-		sprite.setRed(_red);
-		sprite.setGreen(_green);
-		sprite.setBlue(_blue);
+		sprite._red =_red;
+		sprite._green = _green;
+		sprite._blue = _blue;
 		
 		_lastUpdate = now;
 	}

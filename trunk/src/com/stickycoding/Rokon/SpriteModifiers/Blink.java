@@ -1,7 +1,7 @@
 package com.stickycoding.Rokon.SpriteModifiers;
 
+import com.stickycoding.Rokon.DynamicObject;
 import com.stickycoding.Rokon.Rokon;
-import com.stickycoding.Rokon.Sprite;
 import com.stickycoding.Rokon.SpriteModifier;
 import com.stickycoding.Rokon.Handlers.BasicHandler;
 
@@ -37,7 +37,7 @@ public class Blink extends SpriteModifier {
 	}
 	
 	private long now;
-	public void onUpdate(Sprite sprite) {
+	public void onUpdate(DynamicObject sprite) {
 		now = Rokon.getTime();
 		if(_timeout > 0 && now > _timeout) {
 			if(_handler != null)
@@ -47,7 +47,7 @@ public class Blink extends SpriteModifier {
 		}
 		if(now - _lastBlink >= _time) {
 			_visible = !_visible;
-			sprite.setVisible(_visible);
+			sprite._visible = _visible;
 			_lastBlink = now;
 		}
 	}

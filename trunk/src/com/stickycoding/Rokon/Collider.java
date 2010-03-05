@@ -7,7 +7,6 @@ package com.stickycoding.Rokon;
 public class Collider {
 	
 	private static Vector axis = new Vector(0, 0);
-	private static float min, max;
 	private static double angle;
 	
 	/**

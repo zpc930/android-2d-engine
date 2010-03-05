@@ -68,16 +68,16 @@ public class Example11 extends RokonActivity {
 		if(state > 2)
 			state = 0;
 		if(state == 0) {
-			carSprite1.setVisible(true);
-			carSprite2.setVisible(true);
+			carSprite1._visible = true;
+			carSprite2._visible = true;
 		}
 		if(state == 1) {
-			carSprite1.setVisible(false);
-			carSprite2.setVisible(true);
+			carSprite1._visible = (false);
+			carSprite2._visible = (true);
 		}
 		if(state == 2) {
-			carSprite1.setVisible(true);
-			carSprite2.setVisible(false);
+			carSprite1._visible = (true);
+			carSprite2._visible = (false);
 		}
 	}
 	
