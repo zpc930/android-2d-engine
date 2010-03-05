@@ -46,7 +46,7 @@ public class FadeTo extends SpriteModifier {
 	private float modifier, alpha;
 	public void onUpdate(Sprite sprite) {
 		now = Rokon.time;
-		alpha = sprite.getAlpha();
+		alpha = sprite._alpha;
 		if(_startAlpha == -1) {
 			_startAlpha = alpha;
 			return;
@@ -66,12 +66,12 @@ public class FadeTo extends SpriteModifier {
 			alpha = (_startAlpha - _targetAlpha) * modifier;
 			if(alpha < _targetAlpha)
 				alpha = _targetAlpha;
-			sprite.setAlpha(alpha);
+			sprite._alpha = alpha;
 		} else {
 			alpha = (_targetAlpha - _startAlpha) * modifier;
 			if(alpha > _targetAlpha)
 				alpha = _targetAlpha;
-			sprite.setAlpha(alpha);
+			sprite._alpha = alpha;
 		}
 	}
 

@@ -71,7 +71,7 @@ public class MenuObject {
 	public MenuObject(int id, int x, int y, int width, int height) {
 		_id = id;
 		_sprite = new Sprite(x, y, width, height);
-		_sprite.setAlpha(0);
+		_sprite._alpha = 0.0f;
 		_hotspot = new Hotspot(_sprite);
 	}
 	
@@ -153,13 +153,13 @@ public class MenuObject {
 	
 	public void fadeIn(int time) {
 		_sprite.resetModifiers();
-		_sprite.setAlpha(0.0f);
+		_sprite._alpha = 0.0f;
 		_sprite.addModifier(new Fade(time, 1, false));
 	}
 	
 	public void fadeIn(int time, float target) {
 		_sprite.resetModifiers();
-		_sprite.setAlpha(0.0f);
+		_sprite._alpha = 0.0f;
 		_sprite.addModifier(new FadeTo(time, target));
 	}
 	

@@ -57,7 +57,7 @@ public class Fade extends SpriteModifier {
 		now = Rokon.getTime();
 		timeDiff = now - _lastUpdate;
 		modifier = (float)timeDiff / (float)_time;
-		alpha = sprite.getAlpha();
+		alpha = sprite._alpha;
 		if(_fadingOut)
 			alpha -= modifier;
 		else
@@ -74,7 +74,7 @@ public class Fade extends SpriteModifier {
 			if(_loops > -1)
 				_loops--;
 		}
-		sprite.setAlpha(alpha);
+		sprite._alpha = alpha;
 		_lastUpdate = now;
 	}
 

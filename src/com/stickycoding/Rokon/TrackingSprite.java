@@ -50,7 +50,7 @@ public class TrackingSprite extends Sprite {
 		setScale(_parent.getScaleX(), _parent.getScaleY());
 		setXY(_parent.getX() + _offsetX, _parent.getY() + _offsetY);
 		setRotation(_parent.getRotation());
-		setAlpha(_parent.getAlpha() / 3);
+		_alpha = _parent._alpha / 3;
 	}
 	
 	/**

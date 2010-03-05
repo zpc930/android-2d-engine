@@ -1,7 +1,5 @@
 package com.stickycoding.Rokon;
 
-import java.nio.ByteBuffer;
-
 import javax.microedition.khronos.opengles.GL10;
 
 import android.graphics.Bitmap;

@@ -38,7 +38,7 @@ public class MenuFade extends MenuTransition {
 				Debug.print("FADE OVER");
 				_menu.onStartTransitionComplete();
 			} else
-				_sprite.setAlpha(position);
+				_sprite._alpha = position;
 		}
 	}
 

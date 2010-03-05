@@ -278,8 +278,6 @@ public class BasicSprite extends DynamicObject {
 	/**
 	 * Updates the movement, animation and modifiers. This is called automatically, no need to use this.
 	 */
-	private long timeDiff;
-	private int nextTile;
 	public void updateMovement() {
 		//	if this is the first update, forget about it
 		if(getLastUpdate() == 0) {
