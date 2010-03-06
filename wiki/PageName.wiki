@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary Introduction
 
 Android-2d-engine is waiting for your comments, be free to leave your issue or patch, I'm open to contributions and oppinions
 
