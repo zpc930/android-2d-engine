@@ -14,12 +14,16 @@ subject to the following restrictions:
 */
 #include "btBulletCollisionCommon.h"
 #include "btBulletDynamicsCommon.h"
+#include "LinearMath/btSerializer.h"
 #include <stdlib.h>
 #include <string.h>
 #include <jni.h>
 #include <android/log.h>
+#include <stdio.h>
 
-#define LOGV(...) __android_log_print(ANDROID_LOG_SILENT, LOG_TAG, __VA_ARGS__)
+// LOGV drops about 30fps in my htc hero, you are warned
+#define LOGV(...) 
+//#define LOGV(...) __android_log_print(ANDROID_LOG_SILENT, LOG_TAG, __VA_ARGS__)
 //ANDROID_LOG_UNKNOWN, ANDROID_LOG_DEFAULT, ANDROID_LOG_VERBOSE, ANDROID_LOG_DEBUG, ANDROID_LOG_INFO, ANDROID_LOG_WARN, ANDROID_LOG_ERROR, ANDROID_LOG_FATAL, ANDROID_LOG_SILENT
 //LOGV(ANDROID_LOG_DEBUG, "JNI", "");
 
@@ -42,6 +46,7 @@ btAlignedObjectArray<btDynamicsWorld*>	g_DynamicsWorlds;
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 
 JNIEXPORT
 jint
@@ -203,7 +208,11 @@ Java_org_siprop_bullet_Bullet_destroyNative(JNIEnv* env,
 }
 #endif
 
-
+void logi(int var) {
+	char buffer [100];
+	sprintf(buffer, "%d", var);
+	LOGV(buffer);
+}
 
 bool is_NULL_field_JavaObj(JNIEnv* env, jobject java_obj, const char* field_name, const char* field_type) {
 
@@ -356,7 +365,7 @@ btVector3 get_vec_by_JavaObj(JNIEnv* env, jobject java_obj, const char* field_na
 
 }
 
-btPoint3 get_point_by_JavaObj(JNIEnv* env, jobject java_obj, const char* field_name) {
+btVector3 get_point_by_JavaObj(JNIEnv* env, jobject java_obj, const char* field_name) {
 
 	LOGV("in get_point_by_JavaObj!");
 	
@@ -372,7 +381,7 @@ btPoint3 get_point_by_JavaObj(JNIEnv* env, jobject java_obj, const char* field_n
 	jfieldID point_z_fid = env->GetFieldID(point_clazz, "z", "F");
 	jfloat point_z_obj = env->GetFloatField(point_obj, point_z_fid);
 
-	return btPoint3(point_x_obj, point_y_obj, point_z_obj);
+	return btVector3(point_x_obj, point_y_obj, point_z_obj);
 
 }
 
