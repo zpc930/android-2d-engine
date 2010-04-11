@@ -14,6 +14,7 @@ subject to the following restrictions:
 */
 package org.siprop.bullet;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,13 +55,12 @@ public class Bullet {
 										  Vector3 worldAabbMax, 
 										  int maxProxies, 
 										  Vector3 gravity) {
-		
 		PhysicsWorld phyWorld = new PhysicsWorld();
 		phyWorld.worldAabbMin = worldAabbMin;
 		phyWorld.worldAabbMax = worldAabbMax;
 		phyWorld.maxProxies = maxProxies;
 		phyWorld.gravity = gravity;
-		
+	
 		phyWorld.id = createNonConfigPhysicsWorld(phyWorld);
 		
 		defaultPhysicsWorld = phyWorld;
@@ -95,6 +95,7 @@ public class Bullet {
 	}
 	
 	public native int createNonConfigPhysicsWorld(PhysicsWorld physicsWorld);
+	
 	public native int createPhysicsWorld(PhysicsWorld physicsWorld);
 	
 	public native int changePhysicsWorldConfiguration(PhysicsWorld physicsWorld);
@@ -152,8 +153,8 @@ public class Bullet {
 		rigidBodies.put(rigidBody.id , rigidBody);
 		return rigidBody;
 	}
-	public native int createAndAddRigidBody(int physicsWorldId, RigidBody rigidBody);
 	
+	public native int createAndAddRigidBody(int physicsWorldId, RigidBody rigidBody);
 	
 	public void removeRigidBody(RigidBody body) {
 		if(body.physicsWorldId >= 0) {
@@ -298,6 +299,12 @@ public class Bullet {
 //		}
 	}
 	
+	public void collisionDetected (int rb1, int rb2) {
+/*		Log.d("test", "collision");
+		Log.d("test", rb1 + " " + rb2);*/
+//		RigidBody rb = rigidBodies.get(rb2);
+		//removeRigidBody(rb);
+	}
 	
 	public void destory() {
 		defaultPhysicsWorld = null;

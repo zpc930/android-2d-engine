@@ -11,7 +11,6 @@ public class AccelerometerHandler {
 	private float lx, ly;
 	
 	public void onChanged(float x, float y, float z) {
-		float maxInertia = 3.0f;
 		lx = -x/5.0f;
 //		lx = lx > maxInertia ? lx : maxInertia;
 		ly = y/5.0f;

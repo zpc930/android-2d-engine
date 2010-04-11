@@ -21,6 +21,7 @@ import java.util.Map;
 import org.siprop.bullet.Bullet;
 import org.siprop.bullet.PhysicsWorld;
 import org.siprop.bullet.RigidBody;
+import org.siprop.bullet.interfaces.ResultSimulationCallback;
 import org.siprop.bullet.util.ShapeType;
 import org.siprop.bullet.util.Vector3;
 
@@ -39,8 +40,10 @@ public class Mover implements Runnable {
     private int mViewWidth;
     private int mViewHeight;
 	private Bullet bullet;
+	private MoverCallback moverCallback;
 	public Mover(Bullet mBullet) {
 		bullet = mBullet;
+		moverCallback = new MoverCallback(bullet);
 	}
 
     public void run() {
@@ -49,7 +52,7 @@ public class Mover implements Runnable {
 		int i, j = 0;
 
 		// simulation.
-		rigidBodies = bullet.doSimulation(1.0f / 30.0f, 10);
+		rigidBodies = bullet.doSimulationWithCallback(moverCallback, 1.0f / 30.0f, 10);
 		i = j = 0;
 		
 		for (RigidBody body : rigidBodies.values()) {
@@ -79,4 +82,34 @@ public class Mover implements Runnable {
     	this.y = y;
     }
 
+}
+
+
+class MoverCallback implements ResultSimulationCallback {
+	private Bullet bullet;
+	public MoverCallback (Bullet b) {
+		bullet = b;
+	}
+	@Override
+	public void resultSimulation(Map<Integer, RigidBody> rigidBodies) {
+//		Object o = bullet.getCO();
+		
+		// TODO Auto-generated method stub
+//		for (RigidBody body : rigidBodies.values()) {
+//			if (body.geometry.shape.getType() == ShapeType.SPHERE_SHAPE_PROXYTYPE) {
+//				Log.w("test", "x : " + x + " y : " + y);
+//				bullet.applyCentralImpulse(body, new Vector3(x*30.0f, -y*30.0f, 0.0f));
+//				mRenderables[i].x = body.motionState.resultSimulation.originPoint.x;
+//				mRenderables[i].y = body.motionState.resultSimulation.originPoint.y;
+				
+//				i++;
+//			}
+//		}	
+	}
+	
+	public void collisionDetected (RigidBody body1, RigidBody body2) {
+		
+	}
+	
+	
 }

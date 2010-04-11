@@ -94,13 +94,7 @@ public class OpenGLTestActivity extends Activity {
 		PhysicsWorld physicsWorld = bullet.createPhysicsWorld(new Vector3(0.0f,
 				0.0f, 0.0f), new Vector3(dm.widthPixels, dm.heightPixels, 0), 64,
 				new Vector3(0.0f, 0.0f, 0.0f));
-/*		   CollisionDispatcher collisionDispatcher = new CollisionDispatcher();
-		   Solver solver = new VoronoiSimplexSolver();
-		   DynamicsWorld dynamicsWorld = physicsWorld.dynamicsWorld;
-		bullet.createPhysicsWorld(cllisionConfiguration, collisionDispatcher, solver, dynamicsWorld, new Vector3(0.0f,
-				0.0f, 0.0f), new Vector3(dm.widthPixels, dm.heightPixels, 0), 64,
-				new Vector3(0.0f, -9.8f, 0.0f));
-*/
+
 		{
 			StaticPlaneShape floarShape = new StaticPlaneShape(new Vector3(0.0f,
 					1.0f, 0.0f), -20.0f);
