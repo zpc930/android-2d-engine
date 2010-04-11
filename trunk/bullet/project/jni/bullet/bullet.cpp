@@ -14,7 +14,6 @@ subject to the following restrictions:
 */
 #include "bullet.h"
 
-
 JNIEXPORT
 jint
 JNICALL
@@ -119,6 +118,13 @@ Java_org_siprop_bullet_Bullet_createGeometry(JNIEnv* env,
 	LOGV("Load shape interface.");
 	int shapeType = get_type_by_JavaObj(env, shape_obj);
 	LOGV("Load shape val.");
+	logi(STATIC_PLANE_PROXYTYPE);
+	logi(BOX_SHAPE_PROXYTYPE);
+	logi(CAPSULE_SHAPE_PROXYTYPE);
+	logi(CONE_SHAPE_PROXYTYPE);
+	logi(CYLINDER_SHAPE_PROXYTYPE);
+	logi(SPHERE_SHAPE_PROXYTYPE);
+	logi(TETRAHEDRAL_SHAPE_PROXYTYPE);
 	switch(shapeType) {
 		case STATIC_PLANE_PROXYTYPE:
 			LOGV("in STATIC_PLANE_PROXYTYPE.");
@@ -166,6 +172,7 @@ Java_org_siprop_bullet_Bullet_createGeometry(JNIEnv* env,
 
 			
 		default:
+			LOGV("create Geometry returning 0");
 			return 0;
 	}
 
@@ -215,6 +222,7 @@ Java_org_siprop_bullet_Bullet_createAndAddRigidBody(JNIEnv* env,
 	}
 	LOGV("Load shapeID.");
 	int shapeID = get_id_by_JavaObj(env, shape_obj);
+logi(shapeID);
 	btCollisionShape* colShape = g_CollisionShapes.get((btCollisionShape*)shapeID);
 	if(colShape == NULL) {
 		LOGV("shapeID is NULL.");
@@ -741,7 +749,24 @@ Java_org_siprop_bullet_Bullet_doSimulationNative(JNIEnv* env,
 
 	pDynamicsWorld->stepSimulation(exec_time, count);
 
+LOGV("collisions detected");
+	int numManifolds = pDynamicsWorld->getDispatcher()->getNumManifolds();
+	for (int i=0;i<numManifolds;i++)
+	{
+		btPersistentManifold* contactManifold =  pDynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
+		btCollisionObject* obA = static_cast<btCollisionObject*>(contactManifold->getBody0());
+		btCollisionObject* obB = static_cast<btCollisionObject*>(contactManifold->getBody1());
+		
+		
+                jclass bullet_clazz = env->GetObjectClass(thiz);
+                jmethodID bullet_resultSimulation_mid = env->GetMethodID(bullet_clazz, "collisionDetected", "(II)V");
+                env->CallVoidMethod(thiz, bullet_resultSimulation_mid, (int)btRigidBody::upcast(obA), (int)btRigidBody::upcast(obB));
+	}
+
 	signed int coll_obj = pDynamicsWorld->getNumCollisionObjects();
+logi(coll_obj);
+
+logi(numManifolds);
 	for(signed int i = coll_obj - 1; i >= 0; i--){
 		LOGV("in getVertex for loop.");
 		obj = pDynamicsWorld->getCollisionObjectArray()[i];
@@ -873,8 +898,8 @@ void destroyPhysicsWorld(btDynamicsWorld* pDynamicsWorld) {
 		SAFE_DELETE( obj );
 	}
 
-	btCollisionConfiguration* cc = pDynamicsWorld->getCollisionConfiguration();
-	SAFE_DELETE(cc);
+//	btCollisionConfiguration* cc = pDynamicsWorld->getCollisionConfiguration();
+//	SAFE_DELETE(cc);
 	btBroadphaseInterface* bp = pDynamicsWorld->getBroadphase();
 	SAFE_DELETE(bp);
 	btOverlappingPairCache* pc = pDynamicsWorld->getPairCache();

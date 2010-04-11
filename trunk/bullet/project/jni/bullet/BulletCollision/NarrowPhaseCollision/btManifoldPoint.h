@@ -31,6 +31,13 @@ class btManifoldPoint
 			btManifoldPoint()
 				:m_userPersistentData(0),
 				m_appliedImpulse(0.f),
+				m_lateralFrictionInitialized(false),
+				m_appliedImpulseLateral1(0.f),
+				m_appliedImpulseLateral2(0.f),
+				m_contactMotion1(0.f),
+				m_contactMotion2(0.f),
+				m_contactCFM1(0.f),
+				m_contactCFM2(0.f),
 				m_lifeTime(0)
 			{
 			}
@@ -46,6 +53,13 @@ class btManifoldPoint
 					m_combinedRestitution(btScalar(0.)),
 					m_userPersistentData(0),
 					m_appliedImpulse(0.f),
+					m_lateralFrictionInitialized(false),
+					m_appliedImpulseLateral1(0.f),
+					m_appliedImpulseLateral2(0.f),
+					m_contactMotion1(0.f),
+					m_contactMotion2(0.f),
+					m_contactCFM1(0.f),
+					m_contactCFM2(0.f),
 					m_lifeTime(0)
 			{
 				
@@ -74,8 +88,19 @@ class btManifoldPoint
 			mutable void*	m_userPersistentData;
 			btScalar		m_appliedImpulse;
 
-			int		m_lifeTime;//lifetime of the contactpoint in frames
+			bool			m_lateralFrictionInitialized;
+			btScalar		m_appliedImpulseLateral1;
+			btScalar		m_appliedImpulseLateral2;
+			btScalar		m_contactMotion1;
+			btScalar		m_contactMotion2;
+			btScalar		m_contactCFM1;
+			btScalar		m_contactCFM2;
+
+			int				m_lifeTime;//lifetime of the contactpoint in frames
 			
+			btVector3		m_lateralFrictionDir1;
+			btVector3		m_lateralFrictionDir2;
+
 			btScalar getDistance() const
 			{
 				return m_distance1;
@@ -100,6 +125,12 @@ class btManifoldPoint
 				m_distance1 = dist;
 			}
 			
+			///this returns the most recent applied impulse, to satisfy contact constraints by the constraint solver
+			btScalar	getAppliedImpulse() const
+			{
+				return m_appliedImpulse;
+			}
+
 			
 
 	};
