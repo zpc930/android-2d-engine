@@ -40,25 +40,28 @@ public class Mover implements Runnable {
     private int mViewWidth;
     private int mViewHeight;
 	private Bullet bullet;
-	private MoverCallback moverCallback;
+	float[] object_pos;
+	Map<Integer, RigidBody> rigidBodies;
+	int i, j = 0;
+	Vector3 vector3;
 	public Mover(Bullet mBullet) {
 		bullet = mBullet;
-		moverCallback = new MoverCallback(bullet);
+		object_pos = new float[100];
+		vector3 = new Vector3();
 	}
 
     public void run() {
-		float[] object_pos = new float[100];
-		Map<Integer, RigidBody> rigidBodies;
-		int i, j = 0;
 
 		// simulation.
-		rigidBodies = bullet.doSimulationWithCallback(moverCallback, 1.0f / 30.0f, 10);
+		rigidBodies = bullet.doSimulation(1.0f / 30.0f, 10);
 		i = j = 0;
 		
 		for (RigidBody body : rigidBodies.values()) {
 			if (body.geometry.shape.getType() == ShapeType.SPHERE_SHAPE_PROXYTYPE) {
 //				Log.w("test", "x : " + x + " y : " + y);
-				bullet.applyCentralImpulse(body, new Vector3(x*30.0f, -y*30.0f, 0.0f));
+				vector3.x = x*30.0f;
+				vector3.y = -y*30.0f;
+				bullet.applyCentralImpulse(body, vector3);
 				mRenderables[i].x = body.motionState.resultSimulation.originPoint.x;
 				mRenderables[i].y = body.motionState.resultSimulation.originPoint.y;
 				
@@ -82,34 +85,4 @@ public class Mover implements Runnable {
     	this.y = y;
     }
 
-}
-
-
-class MoverCallback implements ResultSimulationCallback {
-	private Bullet bullet;
-	public MoverCallback (Bullet b) {
-		bullet = b;
-	}
-	@Override
-	public void resultSimulation(Map<Integer, RigidBody> rigidBodies) {
-//		Object o = bullet.getCO();
-		
-		// TODO Auto-generated method stub
-//		for (RigidBody body : rigidBodies.values()) {
-//			if (body.geometry.shape.getType() == ShapeType.SPHERE_SHAPE_PROXYTYPE) {
-//				Log.w("test", "x : " + x + " y : " + y);
-//				bullet.applyCentralImpulse(body, new Vector3(x*30.0f, -y*30.0f, 0.0f));
-//				mRenderables[i].x = body.motionState.resultSimulation.originPoint.x;
-//				mRenderables[i].y = body.motionState.resultSimulation.originPoint.y;
-				
-//				i++;
-//			}
-//		}	
-	}
-	
-	public void collisionDetected (RigidBody body1, RigidBody body2) {
-		
-	}
-	
-	
 }
