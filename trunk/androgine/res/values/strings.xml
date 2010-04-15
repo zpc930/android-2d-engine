@@ -12,4 +12,5 @@
 <string name="UseDrawTextureTitle">Use Draw Texture Extension</string>
 <string name="UseVBOTitle">Use VBO Extension</string>
 <string name="RunTestTitle">Run Test</string>
+<string name="Opengl">Opengl</string>
 </resources>
