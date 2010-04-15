@@ -56,11 +56,6 @@ public class SpriteMethodTest extends Activity {
         button = (Button) findViewById(R.id.runTest);
         button.setOnClickListener(mRunTestListener);
 
-        // Turns on one item by default in our radio groups--as it should be!
-        RadioGroup group = (RadioGroup)findViewById(R.id.renderMethod);
-        group.setOnCheckedChangeListener(mMethodChangedListener);
-        group.check(R.id.methodCanvas);
-        
         RadioGroup glSettings = (RadioGroup)findViewById(R.id.GLSettings);
         glSettings.check(R.id.settingVerts);
         
@@ -84,25 +79,17 @@ public class SpriteMethodTest extends Activity {
      */
     View.OnClickListener mRunTestListener = new OnClickListener() {
         public void onClick(View v) {
-            RadioGroup group = (RadioGroup)findViewById(R.id.renderMethod);
             Intent i;
-//            if (group.getCheckedRadioButtonId() == R.id.methodCanvas) {
-            //    i = new Intent(v.getContext(), CanvasTestActivity.class);
-//            } else {
-//    			SensorManager sensorManager = (SensorManager)v.getContext().getSystemService(Context.SENSOR_SERVICE);
-            
-                i = new Intent(v.getContext(), OpenGLTestActivity.class);
-//                i.putExtra("SENSOR_MANAGER", (Bundle) sensorManager);
-                RadioGroup glSettings = 
-                    (RadioGroup)findViewById(R.id.GLSettings);
-                if (glSettings.getCheckedRadioButtonId() == R.id.settingVerts) {
-                    i.putExtra("useVerts", true);
-                } else if (glSettings.getCheckedRadioButtonId() 
-                        == R.id.settingVBO) {
-                    i.putExtra("useVerts", true);
-                    i.putExtra("useHardwareBuffers", true);
-                }
-//            }
+            i = new Intent(v.getContext(), OpenGLTestActivity.class);
+            RadioGroup glSettings = 
+                (RadioGroup)findViewById(R.id.GLSettings);
+            if (glSettings.getCheckedRadioButtonId() == R.id.settingVerts) {
+                i.putExtra("useVerts", true);
+            } else if (glSettings.getCheckedRadioButtonId() 
+                    == R.id.settingVBO) {
+                i.putExtra("useVerts", true);
+                i.putExtra("useHardwareBuffers", true);
+            }
             initializeIntent(i);
             startActivityForResult(i, ACTIVITY_TEST);
         }
@@ -115,15 +102,9 @@ public class SpriteMethodTest extends Activity {
     RadioGroup.OnCheckedChangeListener mMethodChangedListener 
             = new RadioGroup.OnCheckedChangeListener() {
         public void onCheckedChanged(RadioGroup group, int checkedId) {
-           if (checkedId == R.id.methodCanvas) {
-               findViewById(R.id.settingDrawTexture).setEnabled(false);
-               findViewById(R.id.settingVerts).setEnabled(false);
-               findViewById(R.id.settingVBO).setEnabled(false);
-           } else {
-               findViewById(R.id.settingDrawTexture).setEnabled(true);
-               findViewById(R.id.settingVerts).setEnabled(true);
-               findViewById(R.id.settingVBO).setEnabled(true);
-           }
+	       findViewById(R.id.settingDrawTexture).setEnabled(true);
+	       findViewById(R.id.settingVerts).setEnabled(true);
+	       findViewById(R.id.settingVBO).setEnabled(true);
         }
     };
   
