@@ -16,6 +16,7 @@
 
 package org.gs.components.graphics;
 
+import java.util.Collection;
 import java.util.Map;
 
 import org.siprop.bullet.Bullet;
@@ -35,18 +36,12 @@ import android.util.Log;
  */
 public class Mover implements Runnable {
     private Renderable[] mRenderables;
-    private long mLastTime;
-    private long mLastJumbleTime;
-    private int mViewWidth;
-    private int mViewHeight;
 	private Bullet bullet;
-	float[] object_pos;
 	Map<Integer, RigidBody> rigidBodies;
 	int i, j = 0;
 	Vector3 vector3;
 	public Mover(Bullet mBullet) {
 		bullet = mBullet;
-		object_pos = new float[100];
 		vector3 = new Vector3();
 	}
 
@@ -58,7 +53,6 @@ public class Mover implements Runnable {
 		
 		for (RigidBody body : rigidBodies.values()) {
 			if (body.geometry.shape.getType() == ShapeType.SPHERE_SHAPE_PROXYTYPE) {
-//				Log.w("test", "x : " + x + " y : " + y);
 				vector3.x = x*30.0f;
 				vector3.y = -y*30.0f;
 				bullet.applyCentralImpulse(body, vector3);
@@ -73,12 +67,7 @@ public class Mover implements Runnable {
     public void setRenderables(Renderable[] renderables) {
         mRenderables = renderables;
     }
-    
-    public void setViewSize(int width, int height) {
-        mViewHeight = height;
-        mViewWidth = width;
-    }
-    
+        
     private float x, y;
     public void setMovement(float x, float y) {
     	this.x = x;

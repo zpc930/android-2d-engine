@@ -58,7 +58,7 @@ public class OpenGLTestActivity extends Activity {
 
 	private GLSurfaceView mGLSurfaceView;
 	private Bullet bullet = new Bullet();
-	GLSprite[] spriteArray = new GLSprite[11];
+	GLSprite[] spriteArray;
 	SimpleGLRenderer spriteRenderer = new SimpleGLRenderer(this);
 	private Mover simulationRuntime;
 	Context context;
@@ -78,6 +78,7 @@ public class OpenGLTestActivity extends Activity {
 		final Intent callingIntent = getIntent();
 		// Allocate our sprites and add them to an array.
 		final int robotCount = callingIntent.getIntExtra("spriteCount", 10);
+		spriteArray = new GLSprite[robotCount + 1];
 		final boolean animate = callingIntent.getBooleanExtra("animate", true);
 		final boolean useVerts = callingIntent.getBooleanExtra("useVerts",
 				false);
@@ -90,7 +91,6 @@ public class OpenGLTestActivity extends Activity {
 		// so grab the information now.
 		DisplayMetrics dm = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(dm);
-		CollisionConfiguration cllisionConfiguration = new CollisionConfiguration();
 		PhysicsWorld physicsWorld = bullet.createPhysicsWorld(new Vector3(0.0f,
 				0.0f, 0.0f), new Vector3(dm.widthPixels, dm.heightPixels, 0), 64,
 				new Vector3(0.0f, 0.0f, 0.0f));
@@ -172,7 +172,7 @@ public class OpenGLTestActivity extends Activity {
 
 		// This list of things to move. It points to the same content as the
 		// sprite list except for the background.
-		Renderable[] renderableArray = new Renderable[robotCount];
+		Renderable[] renderableArray = new Renderable[robotCount + 1];
 		final int robotBucketSize = robotCount / 3;
 		for (int x = 0; x < robotCount; x++) {
 			GLSprite robot;
@@ -231,7 +231,6 @@ public class OpenGLTestActivity extends Activity {
             simulationRuntime = new Mover(bullet);
             simulationRuntime.setRenderables(renderableArray);
             
-            simulationRuntime.setViewSize(dm.widthPixels, dm.heightPixels);
             mGLSurfaceView.setEvent(simulationRuntime);
     		startAcelerometer();
         }
