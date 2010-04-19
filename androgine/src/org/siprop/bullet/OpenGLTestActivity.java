@@ -63,6 +63,7 @@ public class OpenGLTestActivity extends Activity {
 	private Mover simulationRuntime;
 	Context context;
 	SensorManager sensorManager;
+	boolean profile;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 //		Debug.startMethodTracing("b1");
@@ -73,13 +74,17 @@ public class OpenGLTestActivity extends Activity {
 
 		
 		// Clear out any old profile results.
-		ProfileRecorder.sSingleton.resetAll();
+		if (profile) {
+			ProfileRecorder.sSingleton.resetAll();
+		}
 
 		final Intent callingIntent = getIntent();
 		// Allocate our sprites and add them to an array.
 		final int robotCount = callingIntent.getIntExtra("spriteCount", 10);
 		spriteArray = new GLSprite[robotCount + 1];
 		final boolean animate = callingIntent.getBooleanExtra("animate", true);
+		profile = callingIntent.getBooleanExtra("profile", true);
+		
 		final boolean useVerts = callingIntent.getBooleanExtra("useVerts",
 				false);
 		final boolean useHardwareBuffers = callingIntent.getBooleanExtra(
@@ -226,6 +231,7 @@ public class OpenGLTestActivity extends Activity {
         spriteRenderer.setVertMode(useVerts, useHardwareBuffers);
         
         mGLSurfaceView.setRenderer(spriteRenderer);
+        mGLSurfaceView.profile = profile;
         
         if (animate) {
             simulationRuntime = new Mover(bullet);
