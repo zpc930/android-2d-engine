@@ -44,6 +44,7 @@ import android.view.SurfaceView;
  * instance.
  */
 public class GLSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
+	public boolean profile = true;
     public GLSurfaceView(Context context) {
         super(context);
         init();
@@ -72,6 +73,7 @@ public class GLSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
     public void setRenderer(Renderer renderer) {
         mGLThread = new GLThread(renderer);
+        mGLThread.profile = profile;
         mGLThread.start();
     }
 
@@ -309,6 +311,7 @@ public class GLSurfaceView extends SurfaceView implements SurfaceHolder.Callback
      */
 
     class GLThread extends Thread {
+    	public boolean profile = true;
         GLThread(Renderer renderer) {
             super();
             mDone = false;
@@ -360,7 +363,9 @@ public class GLSurfaceView extends SurfaceView implements SurfaceHolder.Callback
              * asked to quit.
              */
             while (!mDone) {
-                ProfileRecorder.sSingleton.start(ProfileRecorder.PROFILE_FRAME);
+            	if (profile) {
+            		ProfileRecorder.sSingleton.start(ProfileRecorder.PROFILE_FRAME);
+            	}
                 /*
                  *  Update the asynchronous state (window size)
                  */
@@ -369,9 +374,13 @@ public class GLSurfaceView extends SurfaceView implements SurfaceHolder.Callback
                 boolean needStart = false;
                 synchronized (this) {
                     if (mEvent != null) {
-                        ProfileRecorder.sSingleton.start(ProfileRecorder.PROFILE_SIM);
+                    	if (profile) {
+                    		ProfileRecorder.sSingleton.start(ProfileRecorder.PROFILE_SIM);
+                    	}
                         mEvent.run();
-                        ProfileRecorder.sSingleton.stop(ProfileRecorder.PROFILE_SIM);
+                        if (profile) {
+                        	ProfileRecorder.sSingleton.stop(ProfileRecorder.PROFILE_SIM);
+                        }
                     }
                     if (mPaused) {
                         mEglHelper.finish();
@@ -408,21 +417,31 @@ public class GLSurfaceView extends SurfaceView implements SurfaceHolder.Callback
                     tellRendererSurfaceChanged = false;
                 }
                 if ((w > 0) && (h > 0)) {
-                    ProfileRecorder.sSingleton.start(ProfileRecorder.PROFILE_DRAW);
+                	if (profile) {
+                		ProfileRecorder.sSingleton.start(ProfileRecorder.PROFILE_DRAW);
+                	}
                     /* draw a frame here */
                     mRenderer.drawFrame(gl);
-                    ProfileRecorder.sSingleton.stop(ProfileRecorder.PROFILE_DRAW);
+                    if (profile) {
+                    	ProfileRecorder.sSingleton.stop(ProfileRecorder.PROFILE_DRAW);
+                    }
                     
                     /*
                      * Once we're done with GL, we need to call swapBuffers()
                      * to instruct the system to display the rendered frame
                      */
-                    ProfileRecorder.sSingleton.start(ProfileRecorder.PROFILE_PAGE_FLIP);
+                    if (profile) {
+                    	ProfileRecorder.sSingleton.start(ProfileRecorder.PROFILE_PAGE_FLIP);
+                    }
                     mEglHelper.swap();
-                    ProfileRecorder.sSingleton.stop(ProfileRecorder.PROFILE_PAGE_FLIP);
+                    if (profile) {
+                    	ProfileRecorder.sSingleton.stop(ProfileRecorder.PROFILE_PAGE_FLIP);
+                    }
                 }
-                ProfileRecorder.sSingleton.stop(ProfileRecorder.PROFILE_FRAME);
-                ProfileRecorder.sSingleton.endFrame();
+                if (profile) {
+	                ProfileRecorder.sSingleton.stop(ProfileRecorder.PROFILE_FRAME);
+	                ProfileRecorder.sSingleton.endFrame();
+                }
              }
 
             /*

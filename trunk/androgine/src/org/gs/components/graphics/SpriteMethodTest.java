@@ -43,6 +43,7 @@ import android.widget.RadioGroup;
 public class SpriteMethodTest extends Activity {
     private static final int ACTIVITY_TEST = 0;
     private static final int RESULTS_DIALOG = 0;
+    boolean isProfiling;
     
     /** Called when the activity is first created. */
     @Override
@@ -64,13 +65,16 @@ public class SpriteMethodTest extends Activity {
     /** Passes preferences about the test via its intent. */
     protected void initializeIntent(Intent i) {
         final CheckBox checkBox = (CheckBox) findViewById(R.id.animateSprites);
+        final CheckBox profile = (CheckBox) findViewById(R.id.profile);
         final boolean animate = checkBox.isChecked();
         final EditText editText = (EditText) findViewById(R.id.spriteCount);
         final String spriteCountText = editText.getText().toString(); 
         final int stringCount = Integer.parseInt(spriteCountText);
+        isProfiling = profile.isChecked();
         
         i.putExtra("animate", animate);
         i.putExtra("spriteCount", stringCount);
+        i.putExtra("profile", isProfiling);
     }
     
     /** 
@@ -130,7 +134,7 @@ public class SpriteMethodTest extends Activity {
      * describes the actual test results.
      */
     protected void onPrepareDialog (int id, Dialog dialog) {
-        if (id == RESULTS_DIALOG) {
+        if (id == RESULTS_DIALOG && isProfiling) {
             // Extract final timing information from the profiler.
             final ProfileRecorder profiler = ProfileRecorder.sSingleton;
             final long frameTime = 
@@ -183,7 +187,9 @@ public class SpriteMethodTest extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, 
             Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        showDialog(RESULTS_DIALOG);
+        if (isProfiling) {
+        	showDialog(RESULTS_DIALOG);
+        }
              
     }
    
