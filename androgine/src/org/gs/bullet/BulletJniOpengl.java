@@ -22,7 +22,6 @@ import org.gs.bullet.shape.StaticPlaneShape;
 import org.gs.bullet.util.Point3;
 import org.gs.bullet.util.ShapeType;
 import org.gs.bullet.util.Vector3;
-import org.siprop.bullet.R;
 
 import android.app.Activity;
 import android.content.Context;

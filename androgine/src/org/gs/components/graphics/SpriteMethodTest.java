@@ -17,7 +17,7 @@
 package org.gs.components.graphics;
 
 import org.gs.bullet.OpenGLTestActivity;
-import org.siprop.bullet.R;
+import org.gs.bullet.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
