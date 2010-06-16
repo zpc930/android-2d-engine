@@ -2,7 +2,7 @@ package org.gs.components.graphics;
 
 import java.util.List;
 
-import org.siprop.bullet.OpenGLTestActivity;
+import org.gs.bullet.OpenGLTestActivity;
 
 import android.app.Activity;
 import android.content.Context;

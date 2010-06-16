@@ -16,7 +16,7 @@
 
 package org.gs.components.graphics;
 
-import org.siprop.bullet.OpenGLTestActivity;
+import org.gs.bullet.OpenGLTestActivity;
 import org.siprop.bullet.R;
 
 import android.app.Activity;
