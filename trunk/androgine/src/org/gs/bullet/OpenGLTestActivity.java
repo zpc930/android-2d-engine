@@ -32,7 +32,6 @@ import org.gs.components.graphics.Mover;
 import org.gs.components.graphics.ProfileRecorder;
 import org.gs.components.graphics.Renderable;
 import org.gs.components.graphics.SimpleGLRenderer;
-import org.siprop.bullet.R;
 
 import android.app.Activity;
 import android.content.Context;
