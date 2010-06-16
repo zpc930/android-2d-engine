@@ -19,12 +19,12 @@ package org.gs.components.graphics;
 import java.util.Collection;
 import java.util.Map;
 
-import org.siprop.bullet.Bullet;
-import org.siprop.bullet.PhysicsWorld;
-import org.siprop.bullet.RigidBody;
-import org.siprop.bullet.interfaces.ResultSimulationCallback;
-import org.siprop.bullet.util.ShapeType;
-import org.siprop.bullet.util.Vector3;
+import org.gs.bullet.Bullet;
+import org.gs.bullet.PhysicsWorld;
+import org.gs.bullet.RigidBody;
+import org.gs.bullet.interfaces.ResultSimulationCallback;
+import org.gs.bullet.util.ShapeType;
+import org.gs.bullet.util.Vector3;
 
 import android.os.SystemClock;
 import android.util.Log;
