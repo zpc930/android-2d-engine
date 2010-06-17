@@ -11,6 +11,10 @@ subject to the following restrictions:
 1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
+
+Modified version of the library, you can track the changes in http://code.google.com/hosting/p/android-2d-engine 
+
+
 */
 #include "btBulletCollisionCommon.h"
 #include "btBulletDynamicsCommon.h"
@@ -53,14 +57,14 @@ extern "C" {
 JNIEXPORT
 jint
 JNICALL
-Java_org_siprop_bullet_Bullet_createNonConfigPhysicsWorld(JNIEnv* env,
+Java_org_gs_bullet_Bullet_createNonConfigPhysicsWorld(JNIEnv* env,
                                                         jobject thiz,
                                                         jobject physicsWorld );
 
 JNIEXPORT
 jint
 JNICALL
-Java_org_siprop_bullet_Bullet_changePhysicsWorldConfiguration(JNIEnv* env,
+Java_org_gs_bullet_Bullet_changePhysicsWorldConfiguration(JNIEnv* env,
                                                         jobject thiz,
                                                         jobject physicsWorld );
 
@@ -68,14 +72,14 @@ Java_org_siprop_bullet_Bullet_changePhysicsWorldConfiguration(JNIEnv* env,
 JNIEXPORT
 jint
 JNICALL
-Java_org_siprop_bullet_Bullet_createGeometry(JNIEnv* env,
+Java_org_gs_bullet_Bullet_createGeometry(JNIEnv* env,
                                                         jobject thiz,
                                                         jobject geometry );
 
 JNIEXPORT
 jint
 JNICALL
-Java_org_siprop_bullet_Bullet_createAndAddRigidBody(JNIEnv* env,
+Java_org_gs_bullet_Bullet_createAndAddRigidBody(JNIEnv* env,
                                                     jobject thiz,
                                                     jint physicsWorldId,
                                                     jobject rigidBody_obj);
@@ -87,7 +91,7 @@ Java_org_siprop_bullet_Bullet_createAndAddRigidBody(JNIEnv* env,
 JNIEXPORT
 jint
 JNICALL
-Java_org_siprop_bullet_Bullet_applyForce(JNIEnv* env,
+Java_org_gs_bullet_Bullet_applyForce(JNIEnv* env,
                                          jobject thiz,
                                          jint physicsWorldId, 
                                          jint rigidBodyId, 
@@ -98,7 +102,7 @@ Java_org_siprop_bullet_Bullet_applyForce(JNIEnv* env,
 JNIEXPORT
 jint
 JNICALL
-Java_org_siprop_bullet_Bullet_applyTorque(JNIEnv* env,
+Java_org_gs_bullet_Bullet_applyTorque(JNIEnv* env,
                                           jobject thiz,
                                           jint physicsWorldId, 
                                           jint rigidBodyId, 
@@ -109,7 +113,7 @@ Java_org_siprop_bullet_Bullet_applyTorque(JNIEnv* env,
 JNIEXPORT
 jint
 JNICALL
-Java_org_siprop_bullet_Bullet_applyCentralImpulse(JNIEnv* env,
+Java_org_gs_bullet_Bullet_applyCentralImpulse(JNIEnv* env,
                                                   jobject thiz,
                                                   jint physicsWorldId, 
                                                   jint rigidBodyId, 
@@ -119,7 +123,7 @@ Java_org_siprop_bullet_Bullet_applyCentralImpulse(JNIEnv* env,
 JNIEXPORT
 jint
 JNICALL
-Java_org_siprop_bullet_Bullet_applyTorqueImpulse(JNIEnv* env,
+Java_org_gs_bullet_Bullet_applyTorqueImpulse(JNIEnv* env,
                                                  jobject thiz,
                                                  jint physicsWorldId, 
                                                  jint rigidBodyId, 
@@ -129,7 +133,7 @@ Java_org_siprop_bullet_Bullet_applyTorqueImpulse(JNIEnv* env,
 JNIEXPORT
 jint
 JNICALL
-Java_org_siprop_bullet_Bullet_applyImpulse(JNIEnv* env,
+Java_org_gs_bullet_Bullet_applyImpulse(JNIEnv* env,
                                            jobject thiz,
                                            jint physicsWorldId, 
                                            jint rigidBodyId, 
@@ -141,7 +145,7 @@ Java_org_siprop_bullet_Bullet_applyImpulse(JNIEnv* env,
 JNIEXPORT
 jint
 JNICALL
-Java_org_siprop_bullet_Bullet_clearForces(JNIEnv* env,
+Java_org_gs_bullet_Bullet_clearForces(JNIEnv* env,
                                           jobject thiz,
                                           jint physicsWorldId, 
                                           jint rigidBodyId);
@@ -152,7 +156,7 @@ Java_org_siprop_bullet_Bullet_clearForces(JNIEnv* env,
 JNIEXPORT
 jint
 JNICALL
-Java_org_siprop_bullet_Bullet_setActive(JNIEnv* env,
+Java_org_gs_bullet_Bullet_setActive(JNIEnv* env,
                                         jobject thiz,
                                         jint physicsWorldId, 
                                         jint rigidBodyId, 
@@ -161,7 +165,7 @@ Java_org_siprop_bullet_Bullet_setActive(JNIEnv* env,
 JNIEXPORT
 jint
 JNICALL
-Java_org_siprop_bullet_Bullet_setActivePhysicsWorldAll(JNIEnv* env,
+Java_org_gs_bullet_Bullet_setActivePhysicsWorldAll(JNIEnv* env,
                                         jobject thiz,
                                         jint physicsWorldId, 
                                         jboolean isActive);
@@ -169,7 +173,7 @@ Java_org_siprop_bullet_Bullet_setActivePhysicsWorldAll(JNIEnv* env,
 JNIEXPORT
 jint
 JNICALL
-Java_org_siprop_bullet_Bullet_setActiveAll(JNIEnv* env,
+Java_org_gs_bullet_Bullet_setActiveAll(JNIEnv* env,
                                           jobject thiz,
                                           jboolean isActive);
 
@@ -177,7 +181,7 @@ Java_org_siprop_bullet_Bullet_setActiveAll(JNIEnv* env,
 JNIEXPORT
 jint
 JNICALL
-Java_org_siprop_bullet_Bullet_addConstraint(JNIEnv* env,
+Java_org_gs_bullet_Bullet_addConstraint(JNIEnv* env,
                                             jobject thiz,
                                             jobject constraint_obj);
 
@@ -185,7 +189,7 @@ Java_org_siprop_bullet_Bullet_addConstraint(JNIEnv* env,
 JNIEXPORT
 jint
 JNICALL
-Java_org_siprop_bullet_Bullet_doSimulationNative(JNIEnv* env,
+Java_org_gs_bullet_Bullet_doSimulationNative(JNIEnv* env,
                                                  jobject thiz,
                                                  jint physicsWorldId,
                                                  jfloat exec_time,
@@ -196,14 +200,14 @@ Java_org_siprop_bullet_Bullet_doSimulationNative(JNIEnv* env,
 JNIEXPORT
 jboolean
 JNICALL
-Java_org_siprop_bullet_Bullet_destroyPhysicsWorld(JNIEnv* env,
+Java_org_gs_bullet_Bullet_destroyPhysicsWorld(JNIEnv* env,
                                                   jobject thiz,
                                                   jint physicsWorldId);
 
 JNIEXPORT
 jboolean
 JNICALL
-Java_org_siprop_bullet_Bullet_destroyNative(JNIEnv* env,
+Java_org_gs_bullet_Bullet_destroyNative(JNIEnv* env,
                                             jobject thiz);
 
 #ifdef __cplusplus
@@ -240,30 +244,30 @@ bool is_NULL_field_JavaObj(JNIEnv* env, jobject java_obj, const char* field_name
 }
 
 bool is_NULL_vec_field_JavaObj(JNIEnv* env, jobject java_obj, const char* field_name) {
-	return is_NULL_field_JavaObj(env, java_obj, field_name, "Lorg/siprop/bullet/util/Vector3;");
+	return is_NULL_field_JavaObj(env, java_obj, field_name, "Lorg/gs/bullet/util/Vector3;");
 }
 
 bool is_NULL_point_field_JavaObj(JNIEnv* env, jobject java_obj, const char* field_name) {
-	return is_NULL_field_JavaObj(env, java_obj, field_name, "Lorg/siprop/bullet/util/Point3;");
+	return is_NULL_field_JavaObj(env, java_obj, field_name, "Lorg/gs/bullet/util/Point3;");
 }
 
 bool is_NULL_axis_field_JavaObj(JNIEnv* env, jobject java_obj, const char* field_name) {
-	return is_NULL_field_JavaObj(env, java_obj, field_name, "Lorg/siprop/bullet/util/Axis;");
+	return is_NULL_field_JavaObj(env, java_obj, field_name, "Lorg/gs/bullet/util/Axis;");
 }
 
 bool is_NULL_pivot_field_JavaObj(JNIEnv* env, jobject java_obj, const char* field_name) {
-	return is_NULL_field_JavaObj(env, java_obj, field_name, "Lorg/siprop/bullet/util/Pivot3;");
+	return is_NULL_field_JavaObj(env, java_obj, field_name, "Lorg/gs/bullet/util/Pivot3;");
 }
 
 bool is_NULL_quat_field_JavaObj(JNIEnv* env, jobject java_obj, const char* field_name) {
-	return is_NULL_field_JavaObj(env, java_obj, field_name, "Lorg/siprop/bullet/util/Quaternion;");
+	return is_NULL_field_JavaObj(env, java_obj, field_name, "Lorg/gs/bullet/util/Quaternion;");
 }
 
 bool is_NULL_mat3x3_field_JavaObj(JNIEnv* env, jobject java_obj, const char* field_name) {
-	return is_NULL_field_JavaObj(env, java_obj, field_name, "Lorg/siprop/bullet/util/Matrix3x3;");
+	return is_NULL_field_JavaObj(env, java_obj, field_name, "Lorg/gs/bullet/util/Matrix3x3;");
 }
 bool is_NULL_mat3x1_field_JavaObj(JNIEnv* env, jobject java_obj, const char* field_name) {
-	return is_NULL_field_JavaObj(env, java_obj, field_name, "Lorg/siprop/bullet/util/Matrix3x1;");
+	return is_NULL_field_JavaObj(env, java_obj, field_name, "Lorg/gs/bullet/util/Matrix3x1;");
 }
 
 
@@ -356,7 +360,7 @@ btVector3 get_vec_by_JavaObj(JNIEnv* env, jobject java_obj, const char* field_na
 	LOGV("in get_vec_by_JavaObj!");
 
 	jclass clazz = env->GetObjectClass(java_obj);
-	jfieldID vector_fid = env->GetFieldID(clazz, field_name, "Lorg/siprop/bullet/util/Vector3;");
+	jfieldID vector_fid = env->GetFieldID(clazz, field_name, "Lorg/gs/bullet/util/Vector3;");
 	jobject vector_obj = env->GetObjectField(java_obj, vector_fid);
 	
 	
@@ -377,7 +381,7 @@ btVector3 get_point_by_JavaObj(JNIEnv* env, jobject java_obj, const char* field_
 	LOGV("in get_point_by_JavaObj!");
 	
 	jclass clazz = env->GetObjectClass(java_obj);
-	jfieldID point_fid = env->GetFieldID(clazz, field_name, "Lorg/siprop/bullet/util/Point3;");
+	jfieldID point_fid = env->GetFieldID(clazz, field_name, "Lorg/gs/bullet/util/Point3;");
 	jobject point_obj = env->GetObjectField(java_obj, point_fid);
 
 	jclass point_clazz = env->GetObjectClass(point_obj);
@@ -399,7 +403,7 @@ btVector3 get_p2v_by_JavaObj(JNIEnv* env, jobject java_obj, const char* field_na
 	LOGV("in get_p2v_by_JavaObj!");
 	
 	jclass clazz = env->GetObjectClass(java_obj);
-	jfieldID point_fid = env->GetFieldID(clazz, field_name, "Lorg/siprop/bullet/util/Point3;");
+	jfieldID point_fid = env->GetFieldID(clazz, field_name, "Lorg/gs/bullet/util/Point3;");
 	jobject point_obj = env->GetObjectField(java_obj, point_fid);
 
 
@@ -422,7 +426,7 @@ btVector3 get_pivot_by_JavaObj(JNIEnv* env, jobject java_obj, const char* field_
 	LOGV("in get_pivot_by_JavaObj!");
 
 	jclass clazz = env->GetObjectClass(java_obj);
-	jfieldID pivot_fid = env->GetFieldID(clazz, field_name, "Lorg/siprop/bullet/util/Pivot3;");
+	jfieldID pivot_fid = env->GetFieldID(clazz, field_name, "Lorg/gs/bullet/util/Pivot3;");
 	jobject pivot_obj = env->GetObjectField(java_obj, pivot_fid);
 
 
@@ -446,7 +450,7 @@ btVector3 get_axis_by_JavaObj(JNIEnv* env, jobject java_obj, const char* field_n
 	LOGV("in get_axis_by_JavaObj!");
 
 	jclass clazz = env->GetObjectClass(java_obj);
-	jfieldID axis_fid = env->GetFieldID(clazz, field_name, "Lorg/siprop/bullet/util/Axis3;");
+	jfieldID axis_fid = env->GetFieldID(clazz, field_name, "Lorg/gs/bullet/util/Axis3;");
 	jobject axis_obj = env->GetObjectField(java_obj, axis_fid);
 
 
@@ -470,7 +474,7 @@ btQuaternion get_quat_by_JavaObj(JNIEnv* env, jobject java_obj, const char* fiel
 	LOGV("in get_quat_by_JavaObj!");
 
 	jclass clazz = env->GetObjectClass(java_obj);
-	jfieldID quaternion_fid = env->GetFieldID(clazz, field_name, "Lorg/siprop/bullet/util/Quaternion;");
+	jfieldID quaternion_fid = env->GetFieldID(clazz, field_name, "Lorg/gs/bullet/util/Quaternion;");
 	jobject quaternion_obj = env->GetObjectField(java_obj, quaternion_fid);
 
 
@@ -496,7 +500,7 @@ btVector3 get_mat3x1_by_JavaObj(JNIEnv* env, jobject java_obj, const char* field
 	LOGV("in get_mat3x1_by_JavaObj!");
 
 	jclass clazz = env->GetObjectClass(java_obj);
-	jfieldID matrix3x1_fid = env->GetFieldID(clazz, field_name, "Lorg/siprop/bullet/util/Matrix3x1;");
+	jfieldID matrix3x1_fid = env->GetFieldID(clazz, field_name, "Lorg/gs/bullet/util/Matrix3x1;");
 	jobject matrix3x1_obj = env->GetObjectField(java_obj, matrix3x1_fid);
 
 
@@ -523,7 +527,7 @@ btMatrix3x3 get_mat3x3_by_JavaObj(JNIEnv* env, jobject java_obj, const char* fie
 	LOGV("in get_mat3x3_by_JavaObj!");
 
 	jclass clazz = env->GetObjectClass(java_obj);
-	jfieldID matrix3x3_fid = env->GetFieldID(clazz, field_name, "Lorg/siprop/bullet/util/Matrix3x3;");
+	jfieldID matrix3x3_fid = env->GetFieldID(clazz, field_name, "Lorg/gs/bullet/util/Matrix3x3;");
 	jobject matrix3x3_obj = env->GetObjectField(java_obj, matrix3x3_fid);
 
 
